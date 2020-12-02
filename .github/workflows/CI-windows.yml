@@ -39,3 +39,7 @@ jobs:
       - name: Build Release|Win32
         run: |
           "%DEVENV_PATH%" "%SLN_PATH%" /Build "Release|Win32"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UpgradeLog.htm
+          path: CUETools/UpgradeLog*.htm
