@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;
 using Bwg.Scsi;
 using Bwg.Logging;
@@ -784,11 +785,18 @@ namespace CUETools.Ripper.SCSI
 
 			ReadCDCommand[] readmode = { ReadCDCommand.ReadCdBEh, ReadCDCommand.ReadCdD8h };
 			Device.C2ErrorMode[] c2mode = { Device.C2ErrorMode.Mode294, Device.C2ErrorMode.Mode296, Device.C2ErrorMode.None };
-			// Mode294 does not work for these drives: LG GH24NSD1, ASUS DRW-24D5MT. Try Mode296 first
-			if (Path.Contains("GH24NSD1") || Path.Contains("DRW-24D5MT"))
+			// The ProductIdentification string can contain multiple spaces, e.g. "iHAS124   F"
+			string path_trim = Regex.Replace(Path, @"\s+", " ");
+			// Mode294 does not work for these drives: LG GH24NSD1, ASUS DRW-24D5MT, DRW-24B1ST. Try Mode296 first
+			if (path_trim.Contains("GH24NSD1") || path_trim.Contains("DRW-24D5MT") || path_trim.Contains("DRW-24B1ST"))
 			{
 				c2mode.SetValue(Device.C2ErrorMode.Mode296, 0);
 				c2mode.SetValue(Device.C2ErrorMode.Mode294, 1);
+			}
+			if (path_trim.Contains("iHAS124") && path_trim.Contains("iHAS124 F"))
+			{
+			// Mode294 and Mode296 are not working properly in case of iHAS124 F. Use C2ErrorMode.None
+				Array.Reverse(c2mode);
 			}
 			Device.MainChannelSelection[] mainmode = { Device.MainChannelSelection.UserData, Device.MainChannelSelection.F8h };
 			bool found = false;
