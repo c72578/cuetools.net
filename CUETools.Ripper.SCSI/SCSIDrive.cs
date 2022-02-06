@@ -811,7 +811,7 @@ namespace CUETools.Ripper.SCSI
 				return true;
 
 			ReadCDCommand[] readmode = { ReadCDCommand.ReadCdBEh, ReadCDCommand.ReadCdD8h };
-			Device.C2ErrorMode[] c2mode = { Device.C2ErrorMode.Mode294, Device.C2ErrorMode.Mode296, Device.C2ErrorMode.None };
+			Device.C2ErrorMode[] c2mode = { Device.C2ErrorMode.Mode296, Device.C2ErrorMode.Mode294, Device.C2ErrorMode.None };
 			// Mode294 does not work for these drives: LG GH24NSD1, ASUS DRW-24D5MT, PIONEER DVR-S21, PIONEER BDR-XD07U. Try Mode296 first
 			if (Path.Contains("GH24NSD1") || Path.Contains("DRW-24D5MT") || Path.Contains("DVR-S21") || Path.Contains("BDR-XD07U"))
 			{
