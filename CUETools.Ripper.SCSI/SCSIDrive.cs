@@ -811,7 +811,7 @@ namespace CUETools.Ripper.SCSI
 				return true;
 
 			ReadCDCommand[] readmode = { ReadCDCommand.ReadCdBEh, ReadCDCommand.ReadCdD8h };
-			Device.C2ErrorMode[] c2mode = { Device.C2ErrorMode.Mode294, Device.C2ErrorMode.Mode296, Device.C2ErrorMode.None };
+			Device.C2ErrorMode[] c2mode = { Device.C2ErrorMode.Mode296, Device.C2ErrorMode.Mode294, Device.C2ErrorMode.None };
 			// Mode294 does not work for these drives: LG GH24NSD1, ASUS DRW-24D5MT, ASUS DRW-24F1ST d, PIONEER DVR-S21, PIONEER BDR-XD05, PIONEER BDR-XD07U, HL-DT-ST BD-RE BU40N, Slimtype - DVD A DU8AESH. Try Mode296 first
 			// Drives can contain one or multiple spaces in the name, e.g. "ASUS DRW-24F1ST   d". Remove any spaces from Path.
 			string pathNoSpace = Path.Replace(" ", String.Empty);
